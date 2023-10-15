@@ -13,7 +13,7 @@ namespace Ecommerce.SeedData
             context.Database.EnsureDeleted();
             context.Database.Migrate();
 
-
+             
             if (!context.Products.Any())
             {
 
