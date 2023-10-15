@@ -17,5 +17,10 @@ namespace Ecommerce.Data
         public DbSet<Ecommerce.Models.Products> Products { get; set; } = default!;
 
         public DbSet<Ecommerce.Models.Country> Countrys { get; set; } = default!;
+
+        public DbSet<Ecommerce.Models.Cart> Carts { get; set; } = default!;
+
+        public DbSet<Ecommerce.Models.Order> Orders { get; set; } = default!;
+
     }
 }

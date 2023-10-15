@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Ecommerce.Data;
 using Ecommerce.SeedData;
+using Ecommerce.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<EcommerceContext>(options =>
@@ -9,6 +10,12 @@ builder.Services.AddDbContext<EcommerceContext>(options =>
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped(typeof(IRepository<Products>), typeof(ProductsRepo));
+builder.Services.AddScoped(typeof(IRepository<Country>), typeof(CountryRepo));
+builder.Services.AddScoped(typeof(IRepository<Cart>), typeof(CartRepo));
+builder.Services.AddScoped(typeof(IRepository<Order>), typeof(OrderRepo));
+
 
 var app = builder.Build();
 

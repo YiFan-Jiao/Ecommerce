@@ -24,7 +24,7 @@ namespace Ecommerce.SeedData
                         Name = "Product 1",
                         Description = "Description for Product 1",
                         AvailableQuantity = 10,
-                        //PriceCAD = 19.99m
+                        PriceCAD = 19.99m
                     },
                     new Products
                     {
@@ -32,7 +32,7 @@ namespace Ecommerce.SeedData
                         Name = "Product 2",
                         Description = "Description for Product 2",
                         AvailableQuantity = 15,
-                        //PriceCAD = 24.99m
+                        PriceCAD = 24.99m
                     },
                     new Products
                     {
@@ -40,7 +40,7 @@ namespace Ecommerce.SeedData
                         Name = "Product 3",
                         Description = "Description for Product 3",
                         AvailableQuantity = 5,
-                        //PriceCAD = 9.99m
+                        PriceCAD = 9.99m
                     },
                     new Products
                     {
@@ -48,7 +48,7 @@ namespace Ecommerce.SeedData
                         Name = "Product 4",
                         Description = "Description for Product 4",
                         AvailableQuantity = 8,
-                        //PriceCAD = 14.99m
+                        PriceCAD = 14.99m
                     },
                     new Products
                     {
@@ -56,7 +56,7 @@ namespace Ecommerce.SeedData
                         Name = "Product 5",
                         Description = "Description for Product 5",
                         AvailableQuantity = 12,
-                        //PriceCAD = 29.99m
+                        PriceCAD = 29.99m
                     }
                 );
                 context.SaveChanges();
