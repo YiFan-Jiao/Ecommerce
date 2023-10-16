@@ -17,6 +17,9 @@ builder.Services.AddScoped(typeof(IRepository<Country, int>), typeof(CountryRepo
 builder.Services.AddScoped(typeof(IRepository<Cart, int>), typeof(CartRepo));
 builder.Services.AddScoped(typeof(IRepository<Order, int>), typeof(OrderRepo));
 builder.Services.AddTransient<ProductBLL>();
+builder.Services.AddTransient<CartBLL>();
+builder.Services.AddTransient<OrderBLL>();
+
 
 var app = builder.Build();
 

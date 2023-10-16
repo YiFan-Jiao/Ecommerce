@@ -1,15 +1,13 @@
 ﻿@model IEnumerable<Ecommerce.Models.Products>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Catalogue";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Catalogue</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+
 
 
 <form method="get" asp-action="Search">
@@ -36,9 +34,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.PriceCAD)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Cart)
-            </th>
             <th></th>
         </tr>
     </thead>
@@ -58,9 +53,6 @@
                 @Html.DisplayFor(modelItem => item.PriceCAD)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Cart.Id)
-            </td>
-            <td>
                     @if (item.AvailableQuantity > 0)
                     {
                         <a asp-action="AddToCart" asp-route-productId="@item.GUID">AddToCart</a>
@@ -68,9 +60,7 @@
                     else
                     {
                         <span class="text-muted">AddToCart</span>
-                    } |
-                <a asp-action="Details" asp-route-id="@item.GUID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.GUID">Delete</a>
+                    } 
             </td>
         </tr>
 }

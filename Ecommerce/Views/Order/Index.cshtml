@@ -1,0 +1,24 @@
+﻿@model IEnumerable<Ecommerce.Models.Order>
+@{
+    ViewData["Title"] = "Order";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1>Cart</h1>
+
+<h3>Delivery Country: @ViewBag.DeliveryCountry, Conversion Rate: @ViewBag.ConversionRate, TaxRate: @ViewBag.TaxRate</h3>
+<h3>Total Price: @ViewData["TotalPrice"] CAD</h3>
+<h3>Converted Price: @ViewBag.ConvertedPrice CAD</h3>
+<h3>Total Price (with applied taxes): @ViewBag.TotalPriceWithTaxes CAD</h3>
+
+<form method="post" asp-controller="Order" asp-action="Create">
+    <input type="hidden" name="deliveryCountry" value="@ViewBag.DeliveryCountry" />
+    <div class="form-group">
+        <label for="Address">Address:</label>
+        <input name="Address" id="Address" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label for="MailingCode">Mailing Code:</label>
+        <input name="MailingCode" id="MailingCode" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
