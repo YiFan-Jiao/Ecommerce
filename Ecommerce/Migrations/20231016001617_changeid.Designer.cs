@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ecommerce.Migrations
 {
     [DbContext(typeof(EcommerceContext))]
-    [Migration("20231015205037_modelsCreate3")]
-    partial class modelsCreate3
+    [Migration("20231016001617_changeid")]
+    partial class changeid
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -38,7 +38,7 @@ namespace Ecommerce.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Cart");
+                    b.ToTable("Carts");
                 });
 
             modelBuilder.Entity("Ecommerce.Models.Country", b =>
@@ -95,7 +95,7 @@ namespace Ecommerce.Migrations
                     b.HasIndex("CartId")
                         .IsUnique();
 
-                    b.ToTable("Order");
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("Ecommerce.Models.Products", b =>

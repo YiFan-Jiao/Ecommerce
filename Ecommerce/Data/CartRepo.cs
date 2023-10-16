@@ -2,7 +2,7 @@
 
 namespace Ecommerce.Data
 {
-    public class CartRepo : IRepository<Cart>
+    public class CartRepo : IRepository<Cart,int>
     {
         private readonly EcommerceContext _context;
         public CartRepo(EcommerceContext context)

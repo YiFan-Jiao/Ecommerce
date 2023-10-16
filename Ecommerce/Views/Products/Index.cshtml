@@ -10,6 +10,17 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
+
+<form method="get" asp-action="Search">
+    <div class="form-group">
+        <input type="text" name="searchTerm" value="" class="form-control" placeholder="Search by title or description">
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Search</button>
+        <a asp-action="Index" class="btn btn-secondary">Show All</a>
+    </div>
+</form>
 <table class="table">
     <thead>
         <tr>
@@ -50,7 +61,14 @@
                 @Html.DisplayFor(modelItem => item.Cart.Id)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.GUID">Edit</a> |
+                    @if (item.AvailableQuantity > 0)
+                    {
+                        <a asp-action="AddToCart" asp-route-productId="@item.GUID">AddToCart</a>
+                    }
+                    else
+                    {
+                        <span class="text-muted">AddToCart</span>
+                    } |
                 <a asp-action="Details" asp-route-id="@item.GUID">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.GUID">Delete</a>
             </td>

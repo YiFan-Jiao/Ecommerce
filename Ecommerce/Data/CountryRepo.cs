@@ -2,7 +2,7 @@
 
 namespace Ecommerce.Data
 {
-    public class CountryRepo : IRepository<Country>
+    public class CountryRepo : IRepository<Country, int>
     {
         private readonly EcommerceContext _context;
         public CountryRepo(EcommerceContext context)

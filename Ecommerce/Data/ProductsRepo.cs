@@ -2,7 +2,7 @@
 
 namespace Ecommerce.Data
 {
-    public class ProductsRepo : IRepository<Products>
+    public class ProductsRepo : IRepository<Products, Guid>
     {
         private readonly EcommerceContext _context;
         public ProductsRepo(EcommerceContext context)
@@ -23,11 +23,12 @@ namespace Ecommerce.Data
             _context.SaveChanges();
         }
 
-        public Products Get(int id)
+        public Products Get(Guid id)
         {
             Products products = _context.Products.Find(id);
             return products;
         }
+
 
         public ICollection<Products> GetAll()
         {

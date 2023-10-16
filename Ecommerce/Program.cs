@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Ecommerce.Data;
 using Ecommerce.SeedData;
 using Ecommerce.Models;
+using Ecommerce.BLL;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<EcommerceContext>(options =>
@@ -11,11 +12,11 @@ builder.Services.AddDbContext<EcommerceContext>(options =>
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddScoped(typeof(IRepository<Products>), typeof(ProductsRepo));
-builder.Services.AddScoped(typeof(IRepository<Country>), typeof(CountryRepo));
-builder.Services.AddScoped(typeof(IRepository<Cart>), typeof(CartRepo));
-builder.Services.AddScoped(typeof(IRepository<Order>), typeof(OrderRepo));
-
+builder.Services.AddScoped(typeof(IRepository<Products,Guid>), typeof(ProductsRepo));
+builder.Services.AddScoped(typeof(IRepository<Country, int>), typeof(CountryRepo));
+builder.Services.AddScoped(typeof(IRepository<Cart, int>), typeof(CartRepo));
+builder.Services.AddScoped(typeof(IRepository<Order, int>), typeof(OrderRepo));
+builder.Services.AddTransient<ProductBLL>();
 
 var app = builder.Build();
 

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ecommerce.Migrations
 {
     [DbContext(typeof(EcommerceContext))]
-    [Migration("20231015204905_modelsCreate2")]
-    partial class modelsCreate2
+    [Migration("20231016005154_cartAddName")]
+    partial class cartAddName
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,9 +36,13 @@ namespace Ecommerce.Migrations
                     b.Property<int>("ItemsNumInCart")
                         .HasColumnType("int");
 
+                    b.Property<string>("ProductName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Cart");
+                    b.ToTable("Carts");
                 });
 
             modelBuilder.Entity("Ecommerce.Models.Country", b =>
@@ -56,7 +60,7 @@ namespace Ecommerce.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("OrderId")
+                    b.Property<int?>("OrderId")
                         .HasColumnType("int");
 
                     b.Property<double>("TaxRate")
@@ -65,7 +69,8 @@ namespace Ecommerce.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("OrderId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[OrderId] IS NOT NULL");
 
                     b.ToTable("Countrys");
                 });
@@ -94,7 +99,7 @@ namespace Ecommerce.Migrations
                     b.HasIndex("CartId")
                         .IsUnique();
 
-                    b.ToTable("Order");
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("Ecommerce.Models.Products", b =>
@@ -131,9 +136,7 @@ namespace Ecommerce.Migrations
                 {
                     b.HasOne("Ecommerce.Models.Order", "Order")
                         .WithOne("Country")
-                        .HasForeignKey("Ecommerce.Models.Country", "OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Ecommerce.Models.Country", "OrderId");
 
                     b.Navigation("Order");
                 });

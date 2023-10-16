@@ -1,8 +1,8 @@
 ﻿namespace Ecommerce.Data
 {
-    public interface IRepository<T> where T : class
+    public interface IRepository<T,TKey> where T : class
     {
-        public T Get(int id);
+        public T Get(TKey id);
         public ICollection<T> GetAll();
         public T Create(T entity);
         public T Update(T entity);

@@ -2,7 +2,7 @@
 
 namespace Ecommerce.Data
 {
-    public class OrderRepo : IRepository<Order>
+    public class OrderRepo : IRepository<Order, int>
     {
         private readonly EcommerceContext _context;
         public OrderRepo(EcommerceContext context)

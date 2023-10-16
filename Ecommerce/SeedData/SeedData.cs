@@ -21,7 +21,7 @@ namespace Ecommerce.SeedData
                     new Products
                     {
                         GUID = Guid.NewGuid(),
-                        Name = "Product 1",
+                        Name = "BProduct 1",
                         Description = "Description for Product 1",
                         AvailableQuantity = 10,
                         PriceCAD = 19.99m
@@ -29,7 +29,7 @@ namespace Ecommerce.SeedData
                     new Products
                     {
                         GUID = Guid.NewGuid(),
-                        Name = "Product 2",
+                        Name = "AProduct 2",
                         Description = "Description for Product 2",
                         AvailableQuantity = 15,
                         PriceCAD = 24.99m
@@ -37,7 +37,7 @@ namespace Ecommerce.SeedData
                     new Products
                     {
                         GUID = Guid.NewGuid(),
-                        Name = "Product 3",
+                        Name = "DProduct 3",
                         Description = "Description for Product 3",
                         AvailableQuantity = 5,
                         PriceCAD = 9.99m
@@ -45,7 +45,7 @@ namespace Ecommerce.SeedData
                     new Products
                     {
                         GUID = Guid.NewGuid(),
-                        Name = "Product 4",
+                        Name = "CProduct 4",
                         Description = "Description for Product 4",
                         AvailableQuantity = 8,
                         PriceCAD = 14.99m
@@ -53,7 +53,7 @@ namespace Ecommerce.SeedData
                     new Products
                     {
                         GUID = Guid.NewGuid(),
-                        Name = "Product 5",
+                        Name = "EProduct 5",
                         Description = "Description for Product 5",
                         AvailableQuantity = 12,
                         PriceCAD = 29.99m

@@ -33,9 +33,13 @@ namespace Ecommerce.Migrations
                     b.Property<int>("ItemsNumInCart")
                         .HasColumnType("int");
 
+                    b.Property<string>("ProductName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Cart");
+                    b.ToTable("Carts");
                 });
 
             modelBuilder.Entity("Ecommerce.Models.Country", b =>
@@ -92,7 +96,7 @@ namespace Ecommerce.Migrations
                     b.HasIndex("CartId")
                         .IsUnique();
 
-                    b.ToTable("Order");
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("Ecommerce.Models.Products", b =>
