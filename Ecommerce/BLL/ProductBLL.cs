@@ -51,6 +51,20 @@ namespace Ecommerce.BLL
             }
         }
 
+        public ICollection<Products> Search(string searchTerm)
+        {
+            var products = _productRepo.GetAll().ToList(); 
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                products = products.Where(p =>
+                    p.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                    p.Description.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)
+                ).ToList(); 
+            }
+
+            return products;
+        }
 
     }
 }

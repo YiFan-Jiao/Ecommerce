@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Ecommerce.Data;
 using Ecommerce.Models;
 using Ecommerce.BLL;
+using Microsoft.CodeAnalysis;
 
 namespace Ecommerce.Controllers
 {
@@ -29,10 +30,21 @@ namespace Ecommerce.Controllers
 
 
         // GET: Products
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchTerm)
         {
-            var products = _productBLL.GetAllProducts().OrderBy(p => p.Name).ToList();
-            return View(products);
+
+            var searchResults = _productBLL.Search(searchTerm);
+            
+            if (searchResults == null)
+            {
+                var products = _productBLL.GetAllProducts().OrderBy(p => p.Name).ToList();
+                return View(products);
+            }
+            else
+            {
+                return View(searchResults);
+            }
+            
         }
 
         [HttpGet]
@@ -42,7 +54,12 @@ namespace Ecommerce.Controllers
             return RedirectToAction("Index"); 
         }
 
+        public IActionResult Search()
+        {
+            string searchTerm = Request.Query["searchTerm"];
 
+            return RedirectToAction("Index", new { searchTerm = searchTerm });
+        }
 
 
 
