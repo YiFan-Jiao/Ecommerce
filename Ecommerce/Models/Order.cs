@@ -12,6 +12,8 @@
 
         public decimal TotalPriceWithTaxes { get; set; }
 
+        public int AllItemsNum { get; set; }
+
 
         //public int CartId { get; set; }
 

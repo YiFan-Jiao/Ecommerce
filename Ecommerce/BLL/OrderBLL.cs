@@ -44,6 +44,15 @@ namespace Ecommerce.BLL
 
         public void CreateOrder(string address, string mailingCode, string deliveryCountry, decimal totalPriceWithTaxes)
         {
+            var cartItems = _cartRepo.GetAll();
+            int maxOrderID = cartItems.Max(cartItem => cartItem.OrderID);
+
+            var cartItemsWithMaxOrderID = cartItems.Where(cartItem => cartItem.OrderID == maxOrderID).ToList();
+
+            int totalItemsNumInCart = cartItemsWithMaxOrderID.Sum(cartItem => cartItem.ItemsNumInCart);
+            
+
+
             Order newOrder = new Order
             {
                 Address = address,
@@ -51,12 +60,10 @@ namespace Ecommerce.BLL
                 MailingCode = mailingCode,
                 TotalPriceWithTaxes = totalPriceWithTaxes,
             };
-
+            newOrder.AllItemsNum = totalItemsNumInCart;
             _orderRepo.Create(newOrder);
 
-            //List<Order> allOrders = _orderRepo.GetAll().ToList();
-
-            //return allOrders;
+            
         }
 
         public List<Order> GetAll()
