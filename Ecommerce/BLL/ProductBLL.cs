@@ -8,11 +8,13 @@ namespace Ecommerce.BLL
     {
         private readonly IRepository<Products,Guid> _productRepo;
         private readonly IRepository<Cart, int> _cartRepo;
+        private readonly IRepository<Order, int> _orderRepo;
 
-        public ProductBLL(IRepository<Products,Guid> productRepo, IRepository<Cart, int> cartRepo)
+        public ProductBLL(IRepository<Products,Guid> productRepo, IRepository<Cart, int> cartRepo, IRepository<Order, int> orderRepo)
         {
             _productRepo = productRepo;
             _cartRepo = cartRepo;
+            _orderRepo = orderRepo;
         }
 
         public Products CreateProduct(string name, string description, int availableQuantity, decimal priceCAD) 
@@ -24,18 +26,18 @@ namespace Ecommerce.BLL
 
         public IEnumerable<Products> GetAllProducts()
         {
-            return _productRepo.GetAll();
+            return _productRepo.GetAll().OrderBy(p => p.Name).ToList();
         }
 
         public void AddToCart(Guid ProductId)
         {
             ICollection<Cart> Allcarts = _cartRepo.GetAll();
             var product = _productRepo.Get(ProductId);
-
-            bool exists = Allcarts.Any(cart => cart.ProductName == product.Name);
+            int orderCount = _orderRepo.GetAll().Count();
+            bool exists = Allcarts.Any(cart => cart.ProductName == product.Name && cart.OrderID == orderCount+1);
             if (exists)
             {
-                _cartRepo.GetAll().FirstOrDefault(cR => cR.ProductName == _productRepo.Get(ProductId).Name).ItemsNumInCart += 1;
+                _cartRepo.GetAll().FirstOrDefault(cR => cR.ProductName == _productRepo.Get(ProductId).Name && cR.OrderID == orderCount + 1).ItemsNumInCart += 1;
                 product.AvailableQuantity--;
                 _productRepo.Update(product);
                 _cartRepo.Update(_cartRepo.GetAll().FirstOrDefault(cR => cR.ProductName == _productRepo.Get(ProductId).Name));
@@ -43,6 +45,8 @@ namespace Ecommerce.BLL
             else
             {
                 Cart newCart = new Cart();
+               
+                newCart.OrderID = orderCount + 1;
                 newCart.ProductName = _productRepo.Get(ProductId).Name;
                 newCart.ItemsNumInCart = 1;
                 product.AvailableQuantity--;
@@ -60,7 +64,7 @@ namespace Ecommerce.BLL
                 products = products.Where(p =>
                     p.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
                     p.Description.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)
-                ).ToList(); 
+                ).OrderBy(p => p.Name).ToList(); 
             }
 
             return products;

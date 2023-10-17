@@ -1,5 +1,7 @@
 ﻿using Ecommerce.BLL;
+using Ecommerce.Models;
 using Microsoft.AspNetCore.Mvc;
+using static NuGet.Packaging.PackagingConstants;
 
 namespace Ecommerce.Controllers
 {
@@ -13,8 +15,15 @@ namespace Ecommerce.Controllers
             _cartBLL = cartBLL;
             _orderBLL = orderBLL;
         }
+
+        public IActionResult Index()
+        {
+            List<Order> orders = _orderBLL.GetAll();
+            ViewBag.Orders = orders;
+            return View();
+        }
         
-        public IActionResult Index(string deliveryCountry)
+        public IActionResult Submit(string deliveryCountry)
         {
             ViewBag.DeliveryCountry = deliveryCountry;
 
@@ -37,13 +46,11 @@ namespace Ecommerce.Controllers
             string address = Request.Form["Address"];
             string mailingCode = Request.Form["MailingCode"];
             string deliveryCountry = Request.Form["deliveryCountry"];
+            decimal totalPriceWithTaxes = decimal.Parse(Request.Form["totalPriceWithTaxes"]);
 
+            _orderBLL.CreateOrder(address, mailingCode, deliveryCountry, totalPriceWithTaxes);
 
-
-
-            _orderBLL.CreateOrder(address, mailingCode);
-
-            return View();
+            return RedirectToAction("Index");
         }
     }
 }

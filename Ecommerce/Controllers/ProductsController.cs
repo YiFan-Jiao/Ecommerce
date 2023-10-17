@@ -24,16 +24,14 @@ namespace Ecommerce.Controllers
         // GET: Products
         public async Task<IActionResult> Index(string searchTerm)
         {
-
-            var searchResults = _productBLL.Search(searchTerm);
-            
-            if (searchResults == null)
+            if(searchTerm == null)
             {
-                var products = _productBLL.GetAllProducts().OrderBy(p => p.Name).ToList();
+                var products = _productBLL.GetAllProducts();
                 return View(products);
             }
             else
             {
+                var searchResults = _productBLL.Search(searchTerm);
                 return View(searchResults);
             }
         }

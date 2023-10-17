@@ -15,8 +15,8 @@ namespace Ecommerce.Models
 
         public decimal PriceCAD { get; set; }
 
-        public int? CartId { get; set; }
+        //public int? CartId { get; set; }
 
-        public Cart Cart { get; set; }
+        //public Cart Cart { get; set; }
     }
 }

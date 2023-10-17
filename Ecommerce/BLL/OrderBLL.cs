@@ -9,12 +9,14 @@ namespace Ecommerce.BLL
         private readonly IRepository<Products, Guid> _productRepo;
         private readonly IRepository<Cart, int> _cartRepo;
         private readonly IRepository<Country, int> _countryRepo;
+        private readonly IRepository<Order, int> _orderRepo;
 
-        public OrderBLL(IRepository<Products, Guid> productRepo, IRepository<Cart, int> cartRepo, IRepository<Country, int> countryRepo)
+        public OrderBLL(IRepository<Products, Guid> productRepo, IRepository<Cart, int> cartRepo, IRepository<Country, int> countryRepo, IRepository<Order, int> orderRepo)
         {
             _productRepo = productRepo;
             _cartRepo = cartRepo;
             _countryRepo = countryRepo;
+            _orderRepo = orderRepo;
         }
 
 
@@ -40,12 +42,28 @@ namespace Ecommerce.BLL
             };
         }
 
-        public Order CreateOrder(string address, string mailingCode)
+        public void CreateOrder(string address, string mailingCode, string deliveryCountry, decimal totalPriceWithTaxes)
         {
-            Order newOrder = new Order();
+            Order newOrder = new Order
+            {
+                Address = address,
+                DeliveryCountry = deliveryCountry,
+                MailingCode = mailingCode,
+                TotalPriceWithTaxes = totalPriceWithTaxes,
+            };
 
+            _orderRepo.Create(newOrder);
 
-            return newOrder;
+            //List<Order> allOrders = _orderRepo.GetAll().ToList();
+
+            //return allOrders;
+        }
+
+        public List<Order> GetAll()
+        {
+            List<Order> allOrders = _orderRepo.GetAll().ToList();
+
+            return allOrders;
         }
     }
 }

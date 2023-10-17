@@ -1,24 +1,30 @@
-﻿@model IEnumerable<Ecommerce.Models.Order>
-@{
-    ViewData["Title"] = "Order";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-<h1>Cart</h1>
+﻿@model List<Order>
 
-<h3>Delivery Country: @ViewBag.DeliveryCountry, Conversion Rate: @ViewBag.ConversionRate, TaxRate: @ViewBag.TaxRate</h3>
-<h3>Total Price: @ViewData["TotalPrice"] CAD</h3>
-<h3>Converted Price: @ViewBag.ConvertedPrice CAD</h3>
-<h3>Total Price (with applied taxes): @ViewBag.TotalPriceWithTaxes CAD</h3>
+<h1>Order Lists</h1>
 
-<form method="post" asp-controller="Order" asp-action="Create">
-    <input type="hidden" name="deliveryCountry" value="@ViewBag.DeliveryCountry" />
-    <div class="form-group">
-        <label for="Address">Address:</label>
-        <input name="Address" id="Address" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label for="MailingCode">Mailing Code:</label>
-        <input name="MailingCode" id="MailingCode" class="form-control" />
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+<table class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Order ID</th>
+            <th>DeliveryCountry</th>
+            <th>Address</th>
+            <th>Mailing Code</th>
+            <th>Total Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in ViewBag.Orders)
+        {
+            <tr>
+                <td>@order.Id</td>
+                <td>@order.DeliveryCountry</td>
+                <td>@order.Address</td>
+                <td>@order.MailingCode</td>
+                <td>@order.TotalPriceWithTaxes CAD</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+

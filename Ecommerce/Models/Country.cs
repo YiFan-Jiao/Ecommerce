@@ -8,8 +8,8 @@
         public decimal ConversionRate { get; set; } 
         public double TaxRate { get; set; } 
 
-        public int? OrderId { get; set; }
-        public Order Order { get; set; }
+        //public int? OrderId { get; set; }
+        //public Order Order { get; set; }
 
     }
 }

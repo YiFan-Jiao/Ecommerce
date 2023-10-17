@@ -4,6 +4,7 @@ using Ecommerce.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ecommerce.Migrations
 {
     [DbContext(typeof(EcommerceContext))]
-    partial class EcommerceContextModelSnapshot : ModelSnapshot
+    [Migration("20231017001450_CartAndOrderEdited")]
+    partial class CartAndOrderEdited
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -60,10 +63,17 @@ namespace Ecommerce.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("OrderId")
+                        .HasColumnType("int");
+
                     b.Property<double>("TaxRate")
                         .HasColumnType("float");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("OrderId")
+                        .IsUnique()
+                        .HasFilter("[OrderId] IS NOT NULL");
 
                     b.ToTable("Countrys");
                 });
@@ -77,18 +87,12 @@ namespace Ecommerce.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DeliveryCountry")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MailingCode")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("TotalPriceWithTaxes")
+                    b.Property<decimal?>("totalPriceWithTaxes")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
@@ -105,6 +109,9 @@ namespace Ecommerce.Migrations
                     b.Property<int>("AvailableQuantity")
                         .HasColumnType("int");
 
+                    b.Property<int?>("CartId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -118,7 +125,38 @@ namespace Ecommerce.Migrations
 
                     b.HasKey("GUID");
 
+                    b.HasIndex("CartId");
+
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("Ecommerce.Models.Country", b =>
+                {
+                    b.HasOne("Ecommerce.Models.Order", "Order")
+                        .WithOne("Country")
+                        .HasForeignKey("Ecommerce.Models.Country", "OrderId");
+
+                    b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("Ecommerce.Models.Products", b =>
+                {
+                    b.HasOne("Ecommerce.Models.Cart", "Cart")
+                        .WithMany("Products")
+                        .HasForeignKey("CartId");
+
+                    b.Navigation("Cart");
+                });
+
+            modelBuilder.Entity("Ecommerce.Models.Cart", b =>
+                {
+                    b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("Ecommerce.Models.Order", b =>
+                {
+                    b.Navigation("Country")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

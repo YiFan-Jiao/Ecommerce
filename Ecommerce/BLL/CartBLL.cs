@@ -9,17 +9,22 @@ namespace Ecommerce.BLL
         private readonly IRepository<Products, Guid> _productRepo;
         private readonly IRepository<Cart, int> _cartRepo;
         private readonly IRepository<Country, int> _countryRepo;
-
-        public CartBLL(IRepository<Products, Guid> productRepo, IRepository<Cart, int> cartRepo, IRepository<Country, int> countryRepo)
+        private readonly IRepository<Order, int> _orderRepo;
+        public CartBLL(IRepository<Products, Guid> productRepo, IRepository<Cart, int> cartRepo, IRepository<Country, int> countryRepo, IRepository<Order, int> orderRepo)
         {
             _productRepo = productRepo;
             _cartRepo = cartRepo;
             _countryRepo = countryRepo;
+            _orderRepo = orderRepo;
         }
 
         public IEnumerable<Cart> GetAllCarts()
         {
-            return _cartRepo.GetAll();
+            int orderCount = _orderRepo.GetAll().Count();
+
+            var cartItemsWithMaxOrderID = _cartRepo.GetAll().Where(cartItem => cartItem.OrderID == orderCount + 1).ToList();
+
+            return cartItemsWithMaxOrderID;
         }
 
         public void RemoveFromCart(int cartItemId)
@@ -45,7 +50,9 @@ namespace Ecommerce.BLL
 
         public decimal totalPrice()
         {
-            var cartItems = _cartRepo.GetAll();
+            int orderCount = _orderRepo.GetAll().Count();
+            var cartItems = _cartRepo.GetAll().Where(cartItem => cartItem.OrderID == orderCount + 1).ToList();
+            
             decimal totalPrice = 0m;
             //List<decimal> prices = new List<decimal>();
             foreach (var cartItem in cartItems)
