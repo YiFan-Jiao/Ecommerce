@@ -54,7 +54,7 @@ namespace Ecommerce.BLL
             var cartItems = _cartRepo.GetAll().Where(cartItem => cartItem.OrderID == orderCount + 1).ToList();
             
             decimal totalPrice = 0m;
-            //List<decimal> prices = new List<decimal>();
+            
             foreach (var cartItem in cartItems)
             {
                 var product = _productRepo.Get(_productRepo.GetAll().FirstOrDefault(p => p.Name == cartItem.ProductName).GUID);

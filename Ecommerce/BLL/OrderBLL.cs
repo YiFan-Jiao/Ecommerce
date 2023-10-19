@@ -30,6 +30,10 @@ namespace Ecommerce.BLL
         public PriceCalculationResult convertedPrice(decimal price,string deliveryCountry)
         {
             var country = _countryRepo.GetAll().FirstOrDefault(c => c.CountryName == deliveryCountry);
+            if (country == null)
+            {
+                throw new InvalidOperationException("Country not found.");
+            }
             decimal convertedPrice = country.ConversionRate * price;
             decimal totalPriceWithTaxes = (decimal)country.TaxRate * convertedPrice + convertedPrice;
 
@@ -50,8 +54,6 @@ namespace Ecommerce.BLL
             var cartItemsWithMaxOrderID = cartItems.Where(cartItem => cartItem.OrderID == maxOrderID).ToList();
 
             int totalItemsNumInCart = cartItemsWithMaxOrderID.Sum(cartItem => cartItem.ItemsNumInCart);
-            
-
 
             Order newOrder = new Order
             {
@@ -62,8 +64,6 @@ namespace Ecommerce.BLL
             };
             newOrder.AllItemsNum = totalItemsNumInCart;
             _orderRepo.Create(newOrder);
-
-            
         }
 
         public List<Order> GetAll()

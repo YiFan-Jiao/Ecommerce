@@ -17,13 +17,6 @@ namespace Ecommerce.BLL
             _orderRepo = orderRepo;
         }
 
-        public Products CreateProduct(string name, string description, int availableQuantity, decimal priceCAD) 
-        {
-            Products newProduct = new Products();
-            _productRepo.Create(newProduct);
-            return newProduct;
-        }
-
         public IEnumerable<Products> GetAllProducts()
         {
             return _productRepo.GetAll().OrderBy(p => p.Name).ToList();
@@ -37,7 +30,7 @@ namespace Ecommerce.BLL
             bool exists = Allcarts.Any(cart => cart.ProductName == product.Name && cart.OrderID == orderCount+1);
             if (exists)
             {
-                _cartRepo.GetAll().FirstOrDefault(cR => cR.ProductName == _productRepo.Get(ProductId).Name && cR.OrderID == orderCount + 1).ItemsNumInCart += 1;
+                _cartRepo.GetAll().FirstOrDefault(cR => cR.ProductName == _productRepo.Get(ProductId).Name && cR.OrderID == orderCount + 1).ItemsNumInCart++;
                 product.AvailableQuantity--;
                 _productRepo.Update(product);
                 _cartRepo.Update(_cartRepo.GetAll().FirstOrDefault(cR => cR.ProductName == _productRepo.Get(ProductId).Name));
@@ -69,6 +62,5 @@ namespace Ecommerce.BLL
 
             return products;
         }
-
     }
 }
